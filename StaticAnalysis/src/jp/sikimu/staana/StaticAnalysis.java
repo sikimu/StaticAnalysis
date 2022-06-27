@@ -17,7 +17,7 @@ import jp.sikimu.staana.originalsource.OriginalSourceReader;
 public class StaticAnalysis {
 
 	public static void main(String[] args) {
-		Path path = Paths.get("C:\\Users\\iihit\\git\\local_repository\\StaticAnalysis\\src\\jp\\sikimu\\staana\\StaticAnalysis.java");
+		Path path = Paths.get(args[0]);
 
 		OriginalSource originalSource;
 		try {
