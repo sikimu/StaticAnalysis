@@ -1,6 +1,7 @@
 package jp.sikimu.staana.command;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import jp.sikimu.staana.originalsource.OriginalSource;
@@ -31,6 +32,16 @@ public class StaanaCommand implements StaanaData{
 
 		blocks.add(block);
 	}
+	
+	/**
+	 * ブロックの追加(複数)
+	 * @param stack 
+	 * @param block
+	 */
+	void addAll(Collection<? extends OriginalSourceBlock> blocks) {
+
+		this.blocks.addAll(blocks);
+	}	
 
 	public String createSourceCode(OriginalSource source) {
 		

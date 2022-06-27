@@ -1,7 +1,9 @@
 package jp.sikimu.staana.command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import jp.sikimu.staana.originalsource.OriginalSource;
 import jp.sikimu.staana.originalsource.OriginalSourceBlock;
@@ -9,7 +11,7 @@ import jp.sikimu.staana.originalsource.OriginalSourceBlock;
 /**
  * 静的解析用にデータ作成
  * 
- * @author sikimun
+ * @author sikimu
  *
  */
 public class StaanaCommandCreater{
@@ -21,37 +23,34 @@ public class StaanaCommandCreater{
 
 	public static StaanaGroup create(OriginalSource source, Iterator<OriginalSourceBlock> iterator) {
 
+		final String[] END_POINT = {";","{","}"};//コマンドの終わり
+		
 		StaanaGroup root = new StaanaGroup();
+		List<OriginalSourceBlock> stack = new ArrayList<OriginalSourceBlock>();
 		
 		while(iterator.hasNext()) {
 			
-			StaanaCommand command = createCommand(source, iterator);
-			root.add(command);	
-			command.createSourceCode(source);
+			OriginalSourceBlock block = iterator.next();
+			String text = source.getSingleText(block);
+			
+			if(Arrays.asList(END_POINT).contains(source.getSingleText(block))) {
+				
+				StaanaCommand command = new StaanaCommand();
+				command.addAll(stack);
+				System.out.println(command.createSourceCode(source));
+				root.add(command);
+				stack.clear();
+				
+				StaanaCommand command2 = new StaanaCommand();
+				command2.add(block);
+				System.out.println(command2.createSourceCode(source));
+				root.add(command2);
+				continue;
+			}			
+			
+			stack.add(block);
 		}
 
 		return root;
-	}
-	
-	/**
-	 * 1コマンド分を取得する
-	 * @param source
-	 * @param iterator
-	 * @return
-	 */
-	public static StaanaCommand createCommand(OriginalSource source, Iterator<OriginalSourceBlock> iterator) {
-		
-		final String[] END_POINT = {";","{","}"};//コマンドの終わり
-		
-		StaanaCommand command = new StaanaCommand();
-		while(iterator.hasNext()) {
-			OriginalSourceBlock block = iterator.next();
-			command.add(block);
-			if(Arrays.asList(END_POINT).contains(source.getSingleText(block))) {
-				break;
-			}
-		}
-		
-		return command;
 	}
 }
