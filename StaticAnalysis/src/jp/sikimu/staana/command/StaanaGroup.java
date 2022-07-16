@@ -7,24 +7,24 @@ import java.util.ArrayList;
  * @author sikimu
  *
  */
-public class StaanaGroup implements StaanaData {
+public class StaanaGroup extends StaanaCommand {
 
 	/**
 	 * 対象となるコマンドのリスト
 	 */
-	private ArrayList<StaanaData> datas;
+	private ArrayList<StaanaCommand> words;
 
 	public StaanaGroup() {
 
-		datas = new ArrayList<StaanaData>();
+		words = new ArrayList<StaanaCommand>();
 	}
 	
 	/**
 	 * コマンドの追加
-	 * @param block
+	 * @param word
 	 */
-	void add(StaanaData block) {
+	void add(StaanaCommand word) {
 
-		datas.add(block);
+		words.add(word);
 	}
 }

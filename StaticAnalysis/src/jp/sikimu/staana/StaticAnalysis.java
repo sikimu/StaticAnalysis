@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import jp.sikimu.staana.command.StaanaCommandCreater;
-import jp.sikimu.staana.command.StaanaGroup;
-import jp.sikimu.staana.originalsource.OriginalSource;
-import jp.sikimu.staana.originalsource.OriginalSourceReader;
+import jp.sikimu.staana.word.StaanaSource;
 
 /**
  * 静的解析
@@ -19,15 +16,29 @@ public class StaticAnalysis {
 	public static void main(String[] args) {
 		Path path = Paths.get(args[0]);
 
-		OriginalSource originalSource;
 		try {
-			originalSource = OriginalSourceReader.read(path);
-			
-			StaanaGroup root =  StaanaCommandCreater.create(originalSource);
-			
-			System.out.println(root);
+			StaanaSource staanaSource = new StaanaSource(path);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 読み込みのテスト用に作ってあるメソッド
+	 * @param a
+	 */
+	public void test(int a) {
+		String str = "aaaaaa       bbbbbbbbbbbbbbbbbb";
+		
+		int b = 0;
+		b++;
+		b--;
+		b += 1;
+		b -= 1;
+		b *= 1;
+		b /= 1;
+		
+		System.out.print(str + b);
 	}
 }
