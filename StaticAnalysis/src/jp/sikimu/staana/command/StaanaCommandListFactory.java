@@ -1,9 +1,9 @@
 package jp.sikimu.staana.command;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.ListIterator;
 
-import jp.sikimu.staana.word.StaanaWord;
+import jp.sikimu.staana.word.StaanaWordList.StaanaWord;
 
 public class StaanaCommandListFactory {
 
@@ -15,29 +15,46 @@ public class StaanaCommandListFactory {
 	public static ArrayList<StaanaCommand> create(ArrayList<StaanaWord> wordList){
 		
 		ArrayList<StaanaCommand> list = new ArrayList<>();
+
+		list.addAll(create(wordList, 0));
 		
-		Iterator<StaanaWord> iterator = wordList.iterator();
+		return list;
+	}
+	
+	public static ArrayList<StaanaCommand> create(ArrayList<StaanaWord> wordList, int index){
+		
+		ArrayList<StaanaCommand> list = new ArrayList<>();
+		ListIterator<StaanaWord> iterator = wordList.listIterator(index);
+
 		while(iterator.hasNext()) {
 			
-			StaanaWord offsetWord = iterator.next();
+			StaanaWord staanaWord = iterator.next();	
+
+			if(staanaWord.word.matches("^\\s*$")) {
+				continue;
+			}			
 			
-			//文字列
-			if(offsetWord.equals("\"")) {
-				
-				StaanaString str = new StaanaString();
-				str.add(offsetWord);
-				while(iterator.hasNext()) {
-										
-					StaanaWord word = iterator.next();
-					str.add(word);
-					if(word.equals("\"")) {
-						break;
-					}
-				}
-				list.add(str);
-			}
+			list.add(createStaanaCommand(wordList, iterator.previousIndex()));
 		}
 		
 		return list;
+	}
+	
+	public static StaanaCommand createStaanaCommand(ArrayList<StaanaWord> wordList, int index){
+		
+		ArrayList<StaanaWord> list = new ArrayList<>();
+
+		ListIterator<StaanaWord> iterator = wordList.listIterator(index);
+		
+		while(iterator.hasNext()) {
+			
+			StaanaWord staanaWord = iterator.next();
+			if(staanaWord.word.matches("[;|\\{|\\}|\\[|\\]]")) {
+				break;
+			}
+			list.add(staanaWord);
+		}
+		
+		return null;//new StaanaCommand(list);
 	}
 }

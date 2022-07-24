@@ -29,6 +29,7 @@ public class StaticAnalysis {
 	 * @param a
 	 */
 	public void test(int a) {
+		//test 		やで
 		String str = "aaaaaa       bbbbbbbbbbbbbbbbbb";
 		
 		int b = 0;
