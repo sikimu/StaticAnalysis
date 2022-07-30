@@ -24,9 +24,9 @@ public class TokenFactory {
 
 	private int offset;
 	
-	public TokenFactory(Path path) throws IOException {
+	public TokenFactory(String originalSource) throws IOException {
 
-		originalSource = Files.readString(path, StandardCharsets.UTF_8);
+		this.originalSource = originalSource;
 		offset = 0;
 	}
 
