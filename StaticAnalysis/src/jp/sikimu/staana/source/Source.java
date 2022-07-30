@@ -12,11 +12,10 @@ import java.util.List;
  */
 public class Source {
 
-	private final List<Statement> statementList;
+	public final List<Statement> statementList;
 	
 	public Source(ArrayList<Statement> statementList) {
 
 		this.statementList = Collections.unmodifiableList(statementList);
 	}
-
 }

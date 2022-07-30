@@ -35,17 +35,18 @@ public abstract class Statement {
 	 */
 	public static class Block extends Statement{
 		
-		private Token start;
+		private final Token start;
 		
-		private Token end;
+		private final Token end;
 		
-		private List<Statement> statementList;
+		public final List<Statement> statementList;
 		
 		/**
 		 * コンストラクタ
 		 * @param start 開始 {
 		 * @param end 終了 {
 		 * @param statementList　格納されているステートメント
+		 * @param hierarchy 階層
 		 */
 		public Block(Token start, Token end, ArrayList<Statement> statementList) {
 
