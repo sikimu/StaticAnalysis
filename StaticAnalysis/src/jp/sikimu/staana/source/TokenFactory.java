@@ -75,7 +75,14 @@ public class TokenFactory {
 		}
 		// シングルコメント
 		else if(offsetSource.startsWith("//")) {	
-			String word = offsetSource.substring(0, offsetSource.indexOf("\n"));
+			int index = offsetSource.indexOf("\n");
+			String word;
+			if(index > -1) {
+				word = offsetSource.substring(0, index - 1);
+			}
+			else {
+				word = offsetSource;
+			}
 			Optional<Token> token = Optional.of(new Token(offset, word));
 			offset = offset + word.length();
 			return token;

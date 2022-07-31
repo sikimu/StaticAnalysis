@@ -10,12 +10,12 @@ public class Token {
 	/**
 	 * 文字位置(何文字目か)
 	 */
-	private final int charNumber;
+	public final int charNumber;
 	
 	/**
 	 * 形態素文字列
 	 */
-	private final String tokenWord;
+	public final String tokenWord;
 
 	
 	Token(int charNumber, String tokenWord) {
