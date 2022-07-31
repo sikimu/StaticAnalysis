@@ -23,6 +23,11 @@ public class TokenFactory {
 	
 	public TokenFactory(String originalSource) throws IOException {
 
+		if(originalSource == null) {
+			
+			throw new NullPointerException();
+		}
+		
 		this.originalSource = originalSource;
 		offset = 0;
 	}
