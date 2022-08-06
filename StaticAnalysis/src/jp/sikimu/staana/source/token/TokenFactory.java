@@ -19,7 +19,7 @@ public class TokenFactory {
 	 */
 	private final String originalSource;
 
-	private int offset;
+	int offset;
 	
 	public TokenFactory(String originalSource) throws IOException {
 
@@ -63,11 +63,11 @@ public class TokenFactory {
 	 * @param offset
 	 * @return
 	 */
-	private Optional<Token> createComment(){
+	Optional<Token> createComment(){
 		
 		final String offsetSource = originalSource.substring(offset);
 		// マルチコメント
-		if(offsetSource.startsWith("/*")) {		
+		if(offsetSource.startsWith("/*") && offsetSource.indexOf("*/") > -1) {		
 			String word = offsetSource.substring(0, offsetSource.indexOf("*/") + 2);
 			Optional<Token> token = Optional.of(new Token(offset, word));
 			offset = offset + word.length();
@@ -96,7 +96,7 @@ public class TokenFactory {
 	 * @param offset
 	 * @return
 	 */
-	private Optional<Token> createString(){
+	Optional<Token> createString(){
 		
 		final String offsetSource = originalSource.substring(offset);
 		// 文字列
@@ -122,7 +122,7 @@ public class TokenFactory {
 	 * @param offset
 	 * @return
 	 */
-	private Optional<Token> createWord(){
+	Optional<Token> createWord(){
 		
 		final String offsetSource = originalSource.substring(offset);
 		if(Character.isJavaIdentifierStart(originalSource.codePointAt(offset))) {
@@ -142,7 +142,7 @@ public class TokenFactory {
 	 * @param offset
 	 * @return
 	 */
-	private Optional<Token> createDigit(){
+	Optional<Token> createDigit(){
 		
 		final String offsetSource = originalSource.substring(offset);
 		if(Character.isDigit(originalSource.codePointAt(offset))) {
@@ -159,7 +159,7 @@ public class TokenFactory {
 	/**
 	 * 分離子トークン作成
 	 */
-	private Optional<Token> createSeparator(){
+	Optional<Token> createSeparator(){
 		
 		final String[] separators = { "(", ")", "{", "}", "[", "]", ";", ",", ".", "...", "@", "::" };
 		
@@ -179,7 +179,7 @@ public class TokenFactory {
 	/**
 	 * 演算子トークン作成
 	 */
-	private Optional<Token> createOperator(){
+	Optional<Token> createOperator(){
 		
 		final String[] operators = {
 				"=",">","<","!","~","?",":","->",
