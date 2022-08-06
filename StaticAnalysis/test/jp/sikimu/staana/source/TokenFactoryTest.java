@@ -4,11 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import jp.sikimu.staana.source.token.Token;
 import jp.sikimu.staana.source.token.TokenFactory;
 import jp.sikimu.staana.source.token.TokenIterator;
 
