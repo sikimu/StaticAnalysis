@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Statement {
+public interface Statement {
 
 	/**
 	 * 不明な文
 	 * @author sikimu
 	 *
 	 */
-	public static class Unknown extends Statement{
+	public static class Unknown implements Statement{
 				
 		private final Token token;
 		
@@ -33,7 +33,7 @@ public abstract class Statement {
 	 * @author sikimu
 	 *
 	 */
-	public static class Block extends Statement{
+	public static class Block implements Statement{
 		
 		private final Token start;
 		
