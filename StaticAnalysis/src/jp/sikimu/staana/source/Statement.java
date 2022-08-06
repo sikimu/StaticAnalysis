@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jp.sikimu.staana.source.token.Token;
+
 public interface Statement {
 
 	/**

@@ -1,4 +1,4 @@
-package jp.sikimu.staana.source;
+package jp.sikimu.staana.source.token;
 
 /**
  * トークン(解析の最小単位 字句)
@@ -28,7 +28,7 @@ public class Token {
 	 * 自身が { か判断する
 	 * @return
 	 */
-	boolean isBucketStart() {
+	public boolean isBucketStart() {
 		
 		return tokenWord.equals("{");
 	}
@@ -37,7 +37,7 @@ public class Token {
 	 * 自身が } か判断する
 	 * @return
 	 */
-	boolean isBucketEnd() {
+	public boolean isBucketEnd() {
 		
 		return tokenWord.equals("}");
 	}	

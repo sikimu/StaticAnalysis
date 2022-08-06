@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import jp.sikimu.staana.source.token.Token;
+import jp.sikimu.staana.source.token.TokenIterator;
+
 /**
  * ステートメント作成
  * 
@@ -15,25 +18,22 @@ import java.util.Optional;
  */
 public class StatementFactory {
 
-	private List<Token> tokenList;
-	
-	private int offset;
-	
-	public StatementFactory(ArrayList<Token> tokenList) throws IOException {
+	private TokenIterator tokenIterator;
 
-		offset = 0;
-		this.tokenList = Collections.unmodifiableList(tokenList);
+	public StatementFactory(TokenIterator tokenIterator) {
+
+		this.tokenIterator = tokenIterator;
 	}
 
 	public ArrayList<Statement> create() {
 		
 		ArrayList<Statement> list = new ArrayList<>();
 
-		while(offset < tokenList.size()) {
+		while(tokenIterator.hasNext()) {
 
 			Statement statement = createBlock()
 					.or(() -> createUnknown())
-					.orElseThrow(() -> new NoSuchElementException(tokenList.toString()));
+					.orElseThrow(() -> new NoSuchElementException(tokenIterator.next().toString()));
 			
 			list.add(statement);
 		}
@@ -47,24 +47,22 @@ public class StatementFactory {
 	 */
 	private Optional<Statement> createBlock(){
 		
-		if(tokenList.get(offset).isBucketStart()) {
+		if(tokenIterator.isBucketStartNext()) {
 			
-			Token start = tokenList.get(offset);
-			offset++;
+			Token start = tokenIterator.next();
 			
 			ArrayList<Statement> list = new ArrayList<Statement>();
-			while(offset < tokenList.size()) {
+			while(tokenIterator.hasNext()) {
 
-				if(tokenList.get(offset).isBucketEnd()) {
+				if(tokenIterator.isBucketEndNext()) {
 					
-					Token end = tokenList.get(offset);
-					offset++;
+					Token end = tokenIterator.next();
 					return Optional.of(new Statement.Block(start, end, list));
 				}
 				
 				Statement statement = createBlock()
 						.or(() -> createUnknown())
-						.orElseThrow(() -> new NoSuchElementException(tokenList.toString()));
+						.orElseThrow(() -> new NoSuchElementException(tokenIterator.next().toString()));
 				
 				list.add(statement);
 			}
@@ -80,10 +78,8 @@ public class StatementFactory {
 	 */
 	private Optional<Statement> createUnknown(){
 		
-		Statement.Unknown statement = new Statement.Unknown(tokenList.get(offset));
-		
-		offset = offset + 1;
-		
+		Statement.Unknown statement = new Statement.Unknown(tokenIterator.next());
+
 		return Optional.of(statement);
 	}
 }

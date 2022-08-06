@@ -1,4 +1,4 @@
-package jp.sikimu.staana.source;
+package jp.sikimu.staana.source.token;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class TokenFactory {
 		offset = 0;
 	}
 
-	public ArrayList<Token> create() {
+	public TokenIterator create() {
 		
 		ArrayList<Token> list = new ArrayList<>();
 		
@@ -55,7 +55,7 @@ public class TokenFactory {
 			list.add(token);
 		}
 	
-		return list;
+		return new TokenIterator(list);
 	}
 	
 	/**

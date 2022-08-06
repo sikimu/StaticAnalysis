@@ -6,6 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import jp.sikimu.staana.source.token.TokenFactory;
+import jp.sikimu.staana.source.token.TokenIterator;
+
 /**
  * 解析用ソース作成
  * 
@@ -19,9 +22,9 @@ public class SourceFactory {
 		String originalSource = Files.readString(path, StandardCharsets.UTF_8);
 		
 		TokenFactory tokenFactory = new TokenFactory(originalSource);
-		ArrayList<Token> tokenList = tokenFactory.create();
+		TokenIterator tokenIterator = tokenFactory.create();
 		
-		StatementFactory statementFactory = new StatementFactory(tokenList);
+		StatementFactory statementFactory = new StatementFactory(tokenIterator);
 		ArrayList<Statement> statementList = statementFactory.create();
 
 		return new Source(statementList);

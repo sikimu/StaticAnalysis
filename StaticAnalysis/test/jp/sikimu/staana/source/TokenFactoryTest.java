@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import jp.sikimu.staana.source.token.Token;
+import jp.sikimu.staana.source.token.TokenFactory;
+import jp.sikimu.staana.source.token.TokenIterator;
+
 class TokenFactoryTest {
 
 	@Test
@@ -21,23 +25,24 @@ class TokenFactoryTest {
 		
 		{
 			TokenFactory tokenFactory = new TokenFactory("//");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("//", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("//", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("//\r\n");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("//", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("//", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("//a\r\n");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("//a", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("//a", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("a//\r\n");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("//", tokenList.get(1).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			tokenList.next();
+			assertEquals("//", tokenList.next().tokenWord);
 		}
 	}
 	
@@ -46,38 +51,39 @@ class TokenFactoryTest {
 		
 		{
 			TokenFactory tokenFactory = new TokenFactory("/**/");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("/**/", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("/**/", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("/*a*/");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("/*a*/", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("/*a*/", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("a/**/");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("/**/", tokenList.get(1).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			tokenList.next();
+			assertEquals("/**/", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("/**/a");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("/**/", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("/**/", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("/*\r\n*/");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("/*\r\n*/", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("/*\r\n*/", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("\r\n/**/");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("/**/", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("/**/", tokenList.next().tokenWord);
 		}
 		{
 			TokenFactory tokenFactory = new TokenFactory("/**/\r\n");
-			ArrayList<Token> tokenList = tokenFactory.create();
-			assertEquals("/**/", tokenList.get(0).tokenWord);
+			TokenIterator tokenList = tokenFactory.create();
+			assertEquals("/**/", tokenList.next().tokenWord);
 		}
 	}
 }
